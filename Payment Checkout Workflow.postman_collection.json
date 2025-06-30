@@ -1,0 +1,727 @@
+{
+	"info": {
+		"_postman_id": "f521b228-a55a-4bbd-b7f8-c12dfe64d79c",
+		"name": "Payment Checkout Workflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36393272",
+		"_collection_link": "https://hng-11.postman.co/workspace/IDOWU-WORKSPACE~c097ca22-4934-42aa-9753-e50b0ca4280e/collection/36393272-f521b228-a55a-4bbd-b7f8-c12dfe64d79c?action=share&source=collection_link&creator=36393272"
+	},
+	"item": [
+		{
+			"name": "signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful Signin\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"accessToken\", \"{{accessToken}}\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"password\": \"Passw0rd12$\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/signin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"signin"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "successful signin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"password\": \"Passw0rd12$\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"signin"
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n\t\"status\": 200,\n\t\"message\": \"Successful\",\n\t\"data\": {\n\t\t\t\"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gU25vdyIsImVtYWlsIjoiam9obnNub3dAcHJ1bm55LmNvbSIsIm1lcmNoYW50TmFtZSI6IlBydW5ueSBUZXN0IENoZWNrb3V0IiwiaWF0IjoxNTE2MjM5MDIyfQ.5hDqqCFXAv0JhuxUxOO9c2sRd95sc6gL1IrWBDKAmis\"\n\t\t\t\"refreshToken\": \"cmFuZG9tc3RyaW5nZm9ycmVmcmVzaHRva2Vu\"\n\t\t}\n}"
+				},
+				{
+					"name": "invalid password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"password\": \"Passw0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/signin/invalidpassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"signin",
+								"invalidpassword"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 25 Sep 2024 20:21:00 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "386"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=4efb880092a1e012"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=3b4233b274c28f6e"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "119"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1727295720"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"182-1TVPRqch6nEJD4IYhX5S7iv3MIU\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"error message\": \"invalid email or password\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "invalid signin with wrong password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"password\": \"Passw0rd\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/signin/invalidpassword",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"signin",
+						"invalidpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "initiate transaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Jon\",\n\t\"lastName\": \"Snow\",\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"amount\": 1000.00,\n\t\"currency\": \"NGN\",\n\t\"mode\": \"BANK_TRANSFER\",\n\t\"destinationBankCode\": \"057\",\n\t\"destinationAccountNumber\": \"0123456789\"\n}\n"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/transaction/initiate",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"initiate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Jon\",\n\t\"lastName\": \"Snow\",\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"amount\": 1000.00,\n\t\"currency\": \"NGN\",\n\t\"mode\": \"BANK_TRANSFER\",\n\t\"destinationBankCode\": \"057\",\n\t\"destinationAccountNumber\": \"0123456789\"\n}\n"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/transaction/initiate",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"initiate"
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n\t\"status\": 200,\n\t\"message\": \"Successful\",\n\t\"data\": {\n\t  \"sessionID\": \"kl0yIycMqUmkbXNk\",\n\t  \"trxRef\": \"10001221100\"\n\t  \"destinationAccountName\": \"Lana Lang\",\n\t  \"chargeFee\": 10.00,\n\t  \"totalAmount\": 1010.00,\n\t  \"action\": \"AUTHORIZE_PIN\"\n\t}\n}"
+				},
+				{
+					"name": "invalid account number",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Jon\",\n\t\"lastName\": \"Snow\",\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"amount\": 1000.00,\n\t\"currency\": \"NGN\",\n\t\"mode\": \"BANK_TRANSFER\",\n\t\"destinationBankCode\": \"057\",\n\t\"destinationAccountNumber\": \"0123336789\"\n}\n"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/transaction/initiate/invalidaccountno",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"initiate",
+								"invalidaccountno"
+							]
+						}
+					},
+					"status": "Unprocessable Content",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 25 Sep 2024 20:24:16 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Content-Length",
+							"value": "243"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=6e1c7f7a50d91c25"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=7b8497f7598774a6"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "119"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1727295916"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"f3-pN3cBrJ98LSzN7wTgZHyzdF3s5M\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error message\": \"account not found, kindly confirm account number\"\n}"
+				}
+			]
+		},
+		{
+			"name": "initiate transaction with invalid account number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 422\", function () {\r",
+							"    pm.response.to.have.status(422);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Jon\",\n\t\"lastName\": \"Snow\",\n\t\"email\": \"johnsnow@prunny.com\",\n\t\"amount\": 1000.00,\n\t\"currency\": \"NGN\",\n\t\"mode\": \"BANK_TRANSFER\",\n\t\"destinationBankCode\": \"057\",\n\t\"destinationAccountNumber\": \"0123336789\"\n}\n"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/transaction/initiate/invalidaccountno",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"initiate",
+						"invalidaccountno"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authorize transaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"authorize transaction\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sessionID\": \"kl0yIycMqUmkbXNk\",\n\t\"trxRef\": \"10001221100\",\n\t\"action\": \"AUTHORIZE_PIN\",\n\t\"pin\": \"1234\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/transaction/authorize",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"authorize"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"sessionID\": \"kl0yIycMqUmkbXNk\",\n\t\"trxRef\": \"10001221100\",\n\t\"action\": \"AUTHORIZE_PIN\",\n\t\"pin\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/transaction/authorize",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"authorize"
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n\t\"status\": 200,\n\t\"message\": \"Successful\",\n\t\"data\": null\n}"
+				},
+				{
+					"name": "invalid pin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"sessionID\": \"kl0yIycMqUmkbXNk\",\n\t\"trxRef\": \"10001221100\",\n\t\"action\": \"AUTHORIZE_PIN\",\n\t\"pin\": \"4434\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/transaction/authorize/invalidpin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"authorize",
+								"invalidpin"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 25 Sep 2024 20:26:09 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=33a73a2ec11ba3be"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=d585d7717ab23d5d"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "118"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1727296017"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3b-sCrntmAQGojM03yHrTgQTuAZoHw\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"error message\": \"invalid pin\"\n}"
+				}
+			]
+		},
+		{
+			"name": "invalid pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sessionID\": \"kl0yIycMqUmkbXNk\",\n\t\"trxRef\": \"10001221100\",\n\t\"action\": \"AUTHORIZE_PIN\",\n\t\"pin\": \"4434\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/transaction/authorize/invalidpin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"authorize",
+						"invalidpin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate transaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/transaction/10001221100",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"10001221100"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/transaction/10001221100",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"10001221100"
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n\t\"status\": 200,\n\t\"message\": \"Successful\",\n\t\"data\": {\n\t\t\"sessionID\": \"kl0yIycMqUmkbXNk\",\n\t  \"trxRef\": \"10001221100\"\n\t  \"destinationAccountName\": \"Lana Lang\",\n\t  \"currency\": \"NGN\",\n\t\t\"mode\": \"BANK_TRANSFER\"\n\t\t\"destinationBankCode\": \"057\",\n\t\t\"destinationAccountNumber\": \"0123456789\"\n\t\t\"transactionStatus\": \"SUCCESSFUL\"\n\t\t\"amountPaid\": 1010.00\n\t}\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gU25vdyIsImVtYWlsIjoiam9obnNub3dAcHJ1bm55LmNvbSIsIm1lcmNoYW50TmFtZSI6IlBydW5ueSBUZXN0IENoZWNrb3V0IiwiaWF0IjoxNTE2MjM5MDIyfQ.5hDqqCFXAv0JhuxUxOO9c2sRd95sc6gL1IrWBDKAmis",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://49a32bfc-7c40-467a-8e63-ab08377054f1.mock.pstmn.io"
+		},
+		{
+			"key": "accessToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gU25vdyIsImVtYWlsIjoiam9obnNub3dAcHJ1bm55LmNvbSIsIm1lcmNoYW50TmFtZSI6IlBydW5ueSBUZXN0IENoZWNrb3V0IiwiaWF0IjoxNTE2MjM5MDIyfQ.5hDqqCFXAv0JhuxUxOO9c2sRd95sc6gL1IrWBDKAmis",
+			"type": "string"
+		}
+	]
+}
